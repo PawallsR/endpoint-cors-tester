@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            function request(){
+                try {
+                    var http = new XMLHttpRequest();
+                    method = document.getElementById("method").value
+                    url = document.getElementById("url").value
+                    http.open(method, url, false);
+                    http.send();
+                    console.log(http.getAllResponseHeaders())
+                    document.getElementById("response-headers").innerHTML = http.getAllResponseHeaders().replace(/(\r\n|\r|\n)/g, '<br>');
+                    document.getElementById("response-status").innerHTML = http.status + " " + http.statusText
+                    document.getElementById("response-body").innerHTML = http.responseText
+                } catch (error) {
+                    document.getElementById("response-body").innerHTML = error
+                }
+                document.getElementById("response-div").style.opacity = "1"     
+            }
+        </script>
+        <style>
+            #form{
+                display: block;
+            }
+            #response-div{
+                opacity: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h1> Cors Testing Tool </h1>
+        <form action="javascript:void(0);" >
+            <select id="method">
+                <option default value="OPTIONS">OPTIONS</option>
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="PATCH">PATCH</option>
+                <option value="DELETE">DELETE</option>
+            </select>
+            <input id="url" type="text" placeholder="URL"/>
+            <button onclick="request()"> TEST </button>
+        </form>
+        <div id="response-div">
+            <h2> Response</h2>
+            <h3> Response Headers </h3>
+            <div id="response-headers"></div>
+            <h3> Response Status </h3>
+            <div id="response-status"></div>
+            <h3>Response Body</h3>
+            <div id="response-body"></div>
+        </div>
+    </body>
+</html>

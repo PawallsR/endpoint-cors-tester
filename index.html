@@ -9,12 +9,14 @@
                     url = document.getElementById("url").value
                     http.open(method, url, false);
                     http.send();
-                    console.log(http.getAllResponseHeaders())
+                    
                     document.getElementById("response-headers").innerHTML = http.getAllResponseHeaders().replace(/(\r\n|\r|\n)/g, '<br>');
                     document.getElementById("response-status").innerHTML = http.status + " " + http.statusText
                     document.getElementById("response-body").innerHTML = http.responseText
+
                 } catch (error) {
-                    document.getElementById("response-body").innerHTML = error
+                    document.getElementById("response-body").innerHTML = "No 'Access-Control-Allow-Origin' header is present on the requested resource."
+                    console.log(error)
                 }
                 document.getElementById("response-div").style.opacity = "1"     
             }
@@ -30,8 +32,8 @@
     </head>
     <body>
         <h1> Cors Testing Tool </h1>
-        <form action="javascript:void(0);" >
-            <select id="method">
+        <form action="javascript:void(0);" onsubmit="request()">
+            <select id="method" required>
                 <option default value="OPTIONS">OPTIONS</option>
                 <option value="GET">GET</option>
                 <option value="POST">POST</option>
@@ -39,8 +41,8 @@
                 <option value="PATCH">PATCH</option>
                 <option value="DELETE">DELETE</option>
             </select>
-            <input id="url" type="text" placeholder="URL"/>
-            <button onclick="request()"> TEST </button>
+            <input id="url" type="text" placeholder="URL" required/>
+            <button> TEST </button>
         </form>
         <div id="response-div">
             <h2> Response</h2>
